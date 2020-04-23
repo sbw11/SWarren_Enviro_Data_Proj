@@ -1,0 +1,639 @@
+,Status,City,State,ServicePop,Restoration
+325,Does not do them,Leominster,Massachusetts,40490,NA
+376,Does not do them,Carson City,Nevada,56000,NA
+390,Does not do them,Newark,New Jersey,NA,NA
+400,Does not do them,Albany,New York,101082,NA
+403,Does not do them,New York City,New York,8271000,NA
+634,Does not do them,Eau Claire,Wisconsin,NA,NA
+635,Does not do them,Green Bay,Wisconsin,NA,NA
+636,Does not do them,Madison,Wisconsin,NA,NA
+637,Does not do them,Milwaukee,Wisconsin,NA,Y
+554,EXPIRED moratorium,League City,Texas,104857,N
+219,Moratorioum,Hawai'i Department of Water Supply,Hawaii,145235,N
+222,Moratorioum,Pocatello,Idaho,56266,N
+249,Moratorioum,Rolling Meadows,Illinois,24099,N
+369,Moratorioum,Neosho,Missouri,12157,N
+424,Moratorioum,Harnett Regional Water,North Carolina,NA,N
+530,Moratorioum,Athens Utility Board,Tennessee,24610,N
+543,Moratorioum,Big Spring,Texas,27282,N
+559,Moratorioum,Plano,Texas,277720,N
+599,Moratorioum,Alderwood Water District ,Washington,NA,N
+601,Moratorioum,Bellingham ,Washington,NA,N
+605,Moratorioum,Everett,Washington,NA,N
+606,Moratorioum,Lacey,Washington,NA,N
+609,Moratorioum,Lakewood Water District,Washington,NA,N
+611,Moratorioum,Marysville,Washington,NA,N
+612,Moratorioum,Northshore Utility District,Washington,NA,N
+613,Moratorioum,Olympia,Washington,NA,N
+619,Moratorioum,Renton,Washington,NA,N
+620,Moratorioum,Sammish Plateau ,Washington,NA,Y
+622,Moratorioum,Skagit County PUD 1 ,Washington,NA,N
+628,Moratorioum,Vancouver,Washington,NA,N
+1,Moratorium,Birmingham,Alabama,585000,N
+2,Moratorium,Decatur,Alabama,77100,N
+3,Moratorium,Mobile,Alabama,305850,N
+4,Moratorium,Piedmont,Alabama,8184,N
+5,Moratorium,Anchorage,Alaska,221351,N
+6,Moratorium,City and Borough of Juneau,Alaska,38526,N
+7,Moratorium,Kenai ,Alaska,8375,N
+8,Moratorium,Rural Utility Collaborative,Alaska,10360,Y
+9,Moratorium,Soldotna ,Alaska,5057,N
+10,Moratorium,Apache Junction,Arizona,13657,N
+11,Moratorium,Buckeye,Arizona,38070,N
+12,Moratorium,Chandler ,Arizona,247328,N
+13,Moratorium,Flagstaff,Arizona,67000,N
+14,Moratorium,Gilbert,Arizona,247600,N
+15,Moratorium,Glendale,Arizona,234766,N
+16,Moratorium,Goodyear,Arizona,50001,N
+17,Moratorium,Mesa,Arizona,466000,N
+18,Moratorium,Peoria,Arizona,135975,N
+19,Moratorium,Phoenix ,Arizona,1579000,Y
+20,Moratorium,Queen Creek,Arizona,81919,N
+21,Moratorium,Scottsdale,Arizona,230000,N
+22,Moratorium,Springerdale,Arizona,1972,N
+23,Moratorium,Surprise,Arizona,31649,N
+24,Moratorium,Tempe,Arizona,165000,Y
+25,Moratorium,Tucson,Arizona,675686,N
+26,Moratorium,Benton,Arkansas,30681,Y
+27,Moratorium,Central Arkansas Water,Arkansas,330667,Y
+28,Moratorium,Fayetteville,Arkansas,102878,N
+29,Moratorium,Helena-West Helena,Arkansas,5693,N
+30,Moratorium,Hot Springs,Arkansas,92020,N
+31,Moratorium,Jonesboro,Arkansas,79864,N
+32,Moratorium,Pea Ridge,Arkansas,7273,N
+33,Moratorium,Rodgers,Arkansas,70878,N
+34,Moratorium,Springdale,Arkansas,90235,N
+35,Moratorium,Statewide (regulated),Arkansas,44730,N
+36,Moratorium,Alameda County,California,NA,N
+37,Moratorium,Anaheim ,California,NA,N
+38,Moratorium,Arcadia,California,NA,N
+39,Moratorium,Arcata,California,NA,N
+40,Moratorium,Azusa,California,NA,N
+41,Moratorium,Beaumont-Cherry Valley Water District,California,NA,N
+42,Moratorium,Benicia,California,NA,N
+43,Moratorium,Burbank,California,NA,N
+44,Moratorium,California City,California,NA,N
+45,Moratorium,Carlsbad,California,NA,N
+46,Moratorium,Cerritos,California,NA,N
+47,Moratorium,Coachella Valley Water District,California,NA,N
+48,Moratorium,Colton,California,NA,N
+49,Moratorium,Corona,California,NA,N
+50,Moratorium,Davis,California,NA,N
+51,Moratorium,Desert water Agency,California,NA,N
+52,Moratorium,East Valley Water District,California,NA,N
+53,Moratorium,Eastern Municipal Water District,California,NA,N
+54,Moratorium,EBMUD,California,NA,Y
+55,Moratorium,El Centro,California,NA,N
+56,Moratorium,Elsinore Valley Municipal Water District,California,NA,N
+57,Moratorium,Eureka,California,NA,N
+58,Moratorium,Fortuna,California,NA,N
+59,Moratorium,Garden Grove,California,NA,N
+60,Moratorium,Glendale,California,NA,N
+61,Moratorium,Healdsburg,California,NA,N
+62,Moratorium,Helix Water District,California,NA,N
+63,Moratorium,Hesperia,California,NA,N
+64,Moratorium,Irvine Ranch Water District ,California,NA,N
+65,Moratorium,Las Virgenes MWD,California,NA,N
+66,Moratorium,Lathrop ,California,NA,N
+67,Moratorium,Lodi,California,NA,N
+68,Moratorium,Lompoc,California,NA,N
+69,Moratorium,Long Beach,California,NA,N
+70,Moratorium,Los Angeles,California,NA,Y
+71,Moratorium,Los Angeles Countywide,California,NA,Y
+72,Moratorium,Marin Municipal Water District,California,NA,N
+73,Moratorium,McKinleyville CSD,California,NA,N
+74,Moratorium,Morro Bay,California,NA,N
+75,Moratorium,Napa,California,NA,N
+76,Moratorium,Needles,California,NA,N
+77,Moratorium,Nevada Irrigation District,California,NA,N
+78,Moratorium,Oceanside,California,NA,N
+79,Moratorium,Otay Water District,California,NA,N
+80,Moratorium,Oxnard,California,NA,N
+81,Moratorium,Palo Alto,California,NA,N
+82,Moratorium,Pasadena,California,NA,N
+83,Moratorium,Placer County Water Agency,California,NA,N
+84,Moratorium,Portola,California,NA,N
+85,Moratorium,Rancho,California,NA,N
+86,Moratorium,Redding,California,NA,N
+87,Moratorium,Rio Dell,California,NA,N
+88,Moratorium,Riverside,California,NA,N
+89,Moratorium,Roseville,California,NA,N
+90,Moratorium,Sacramento,California,NA,N
+91,Moratorium,San Bernardino ,California,NA,N
+92,Moratorium,San Diego,California,NA,N
+93,Moratorium,San Francisco,California,NA,N
+94,Moratorium,San Jacinto ,California,NA,N
+95,Moratorium,San Joaquin County,California,NA,N
+96,Moratorium,San Juan Water District,California,NA,Y
+97,Moratorium,Santa Ana,California,NA,N
+98,Moratorium,Santa Clara,California,NA,N
+99,Moratorium,Santa Clarita Valley,California,NA,N
+100,Moratorium,Santa Paula,California,NA,N
+101,Moratorium,Santa Rosa,California,NA,N
+102,Moratorium,Shasta Lake,California,NA,N
+103,Moratorium,Shelter Cove Resort Improvement District No. 1,California,NA,N
+104,Moratorium,Signal Hill,California,NA,N
+105,Moratorium,Soquel Creek Water District,California,NA,N
+106,Moratorium,South Pasadena,California,NA,N
+107,Moratorium,Statewide (all),California,39695376,N
+108,Moratorium,Sweetwater,California,NA,N
+109,Moratorium,Truckee Donner PUD,California,NA,N
+110,Moratorium,Ukiah,California,NA,N
+111,Moratorium,Vallecitos Water,California,NA,N
+112,Moratorium,Vallejo,California,NA,N
+113,Moratorium,Valley Center MWD,California,NA,N
+114,Moratorium,Vernon,California,NA,N
+115,Moratorium,Victorville,California,NA,N
+116,Moratorium,Western Municipal Water District ,California,NA,N
+117,Moratorium,Yorba Linda Water District,California,NA,N
+118,Moratorium,Yurok Tribe,California,5000,Y
+119,Moratorium,Aurora,Colorado,465501,N
+120,Moratorium,Bennett,Colorado,3100,N
+121,Moratorium,Berthoud ,Colorado,7540,N
+122,Moratorium,Brighton,Colorado,36010,N
+123,Moratorium,Colorado Springs,Colorado,442409,N
+124,Moratorium,Del Norte,Colorado,1800,N
+125,Moratorium,Denver,Colorado,1362071,Y
+126,Moratorium,Louisville,Colorado,20319,N
+127,Moratorium,Merino,Colorado,235,N
+128,Moratorium,Pueblo West Metropolitan District,Colorado,30000,N
+129,Moratorium,Statewide (Regulated),Colorado,764,N
+130,Moratorium,Metropolitan District (MDC),Connecticut,390887,N
+131,Moratorium,Regional Water Authority,Connecticut,418900,N
+132,Moratorium,Statewide (regulated),Connecticut,981298,N
+133,Moratorium,Washington,DC,632323,Y
+134,Moratorium,Wilmington,Delaware,107976,N
+135,Moratorium,Broward County,Florida,129927,N
+136,Moratorium,Casselberry,Florida,54747,N
+137,Moratorium,Charlotte County,Florida,128967,Y
+138,Moratorium,Cocoa,Florida,294039,N
+139,Moratorium,Collier County,Florida,171370,N
+140,Moratorium,Cooper City,Florida,33752,N
+141,Moratorium,Coral Springs,Florida,65000,N
+142,Moratorium,Dania Beach,Florida,17132,N
+143,Moratorium,Davie,Florida,26000,N
+144,Moratorium,Daytona Beach,Florida,90620,N
+145,Moratorium,Deerfield Beach,Florida,52749,N
+146,Moratorium,Deland,Florida,50910,N
+147,Moratorium,Deltona,Florida,76268,N
+148,Moratorium,Edgewater,Florida,23626,N
+149,Moratorium,Emerald Coast Utility Authority,Florida,255884,N
+150,Moratorium,Fort Lauderdale,Florida,182245,N
+151,Moratorium,Fort Pierce Utility Authority,Florida,58000,N
+152,Moratorium,Gainesville Regional Utilities,Florida,190600,N
+153,Moratorium,Gulf Breeze,Florida,5938,N
+154,Moratorium,Hillsborough County,Florida,642806,N
+155,Moratorium,Holly Hill,Florida,13437,N
+156,Moratorium,Indian River County,Florida,122537,N
+157,Moratorium,JEA,Florida,739834,N
+158,Moratorium,Lake Worth Beach,Florida,48000,Y
+159,Moratorium,"LAKELAND, CITY OF",Florida,180792,N
+160,Moratorium,Lauderhill,Florida,55000,N
+161,Moratorium,Lee County,Florida,250286,N
+162,Moratorium,Manatee County ,Florida,447382,N
+163,Moratorium,Margate,Florida,62254,N
+164,Moratorium,Martin County,Florida,95229,N
+165,Moratorium,Melbourne,Florida,165940,N
+166,Moratorium,Miami Dade,Florida,2300000,Y
+167,Moratorium,Miramar,Florida,127700,N
+168,Moratorium,Naples,Florida,52906,N
+169,Moratorium,New Smyrna Beach,Florida,63303,N
+170,Moratorium,North Lauderdale,Florida,35709,N
+171,Moratorium,North Springs Improvement District,Florida,37371,N
+172,Moratorium,Oakland Park,Florida,27984,N
+173,Moratorium,Okaloosa County,Florida,97265,N
+174,Moratorium,Orange County,Florida,470649,N
+175,Moratorium,Orlando,Florida,441368,N
+176,Moratorium,Ormond Beach,Florida,50632,N
+177,Moratorium,Palm Coast,Florida,80325,N
+178,Moratorium,Pasco County ,Florida,214409,Y
+179,moratorium,Pinellas County Utilities ,Florida,449316,N
+180,Moratorium,Pinellas Park ,Florida,48939,N
+181,Moratorium,Plantation,Florida,85496,N
+182,Moratorium,Pompano Beach,Florida,84000,N
+183,Moratorium,Ponce Inlet,Florida,3693,N
+184,Moratorium,Port Orange,Florida,74830,N
+185,Moratorium,Port St. Lucie,Florida,157943,N
+186,Moratorium,Sarasota,Florida,55364,N
+187,Moratorium,Sarasota County,Florida,171009,N
+188,Moratorium,Seminole County,Florida,70040,N
+189,Moratorium,St. Cloud,Florida,64668,N
+190,Moratorium,St. Petersburg,Florida,304016,N
+191,Moratorium,Stuart,Florida,19000,N
+192,Moratorium,Tallahassee,Florida,193927,N
+193,Moratorium,Tamarac,Florida,66375,N
+194,Moratorium,Tampa,Florida,645000,N
+195,Moratorium,Toho Water,Florida,219879,N
+196,Moratorium,Vero Beach,Florida,37308,N
+197,Moratorium,Volusia County,Florida,29850,N
+198,Moratorium,Wilton Manors,Florida,11700,N
+199,Moratorium,Athens-Clarke County,Georgia,120266,Y
+200,Moratorium,Atlanta,Georgia,650000,N
+201,Moratorium,Augusta,Georgia,204000,N
+202,Moratorium,Bloomingdale,Georgia,2500,N
+203,Moratorium,Clayton County Water Authority,Georgia,270000,N
+204,Moratorium,Columbus ,Georgia,229000,N
+205,Moratorium,Dade County ,Georgia,17781,N
+206,Moratorium,Dalton Utilities,Georgia,99315,N
+207,Moratorium,Effingham County,Georgia,9869,N
+208,Moratorium,Fayette County,Georgia,77051,N
+209,Moratorium,Griffin,Georgia,23643,N
+210,Moratorium,Hinesville,Georgia,24666,N
+211,Moratorium,Macon,Georgia,130024,N
+212,Moratorium,Marietta,Georgia,60100,N
+213,Moratorium,Metter-Candler County,Georgia,4776,N
+214,Moratorium,Newnan,Georgia,49987,N
+215,Moratorium,Savannah,Georgia,168958,N
+216,Moratorium,Smyrna,Georgia,35000,N
+217,Moratorium,Statesboro,Georgia,36846,N
+218,Moratorium,Sylvania,Georgia,4910,N
+220,Moratorium,Honolulu Board of Water Supply,Hawaii,631389,N
+221,Moratorium,Payette,Idaho,7433,N
+223,Moratorium,Twin Falls,Idaho,46000,N
+224,Moratorium,Aurora,Illinois,200500,N
+225,Moratorium,Calumet City,Illinois,37000,N
+226,Moratorium,Carol Stream,Illinois,41250,N
+228,Moratorium,Decatur,Illinois,76122,N
+229,Moratorium,DeKalb,Illinois,45000,N
+230,Moratorium,Dolton,Illinois,23333,N
+231,Moratorium,Elgin,Illinois,108188,Y
+232,Moratorium,Elmhurst ,Illinois,46387,N
+233,Moratorium,Evanston,Illinois,74486,N
+234,Moratorium,Harvey,Illinois,25000,N
+235,Moratorium,Hoffman Estates,Illinois,53295,N
+236,Moratorium,Joliet,Illinois,148693,N
+237,Moratorium,La Salle,Illinois,9700,N
+238,Moratorium,Lake in the Hills,Illinois,28965,N
+239,Moratorium,Lake Zurich,Illinois,20022,N
+240,Moratorium,Lombard,Illinois,43395,N
+241,Moratorium,Mattoon,Illinois,19000,N
+242,Moratorium,Naperville,Illinois,149294,N
+243,Moratorium,Normal,Illinois,44197,N
+244,Moratorium,North Chicago,Illinois,16813,N
+245,Moratorium,O’Fallon,Illinois,43596,N
+246,Moratorium,Oglesby ,Illinois,4500,N
+247,Moratorium,Quincy,Illinois,45000,N
+248,Moratorium,Rockford,Illinois,147051,N
+250,Moratorium,Romeoville ,Illinois,52000,N
+251,Moratorium,Schaumburg,Illinois,74550,N
+252,Moratorium,Skokie,Illinois,64784,N
+253,Moratorium,Springfield,Illinois,119395,N
+254,Moratorium,Statewide (regulated),Illinois,1215296,N
+255,Moratorium,Thomasboro,Illinois,1233,N
+256,Moratorium,Waukegan,Illinois,88182,N
+257,Moratorium,Wheaton,Illinois,52894,N
+258,Moratorium,Woodridge,Illinois,35521,N
+259,Moratorium,Bloomington,Indiana,NA,N
+260,Moratorium,Carmel,Indiana,NA,N
+261,Moratorium,Evansville,Indiana,NA,N
+262,Moratorium,Fort Wayne,Indiana,NA,N
+263,Moratorium,Frankfort,Indiana,NA,N
+264,Moratorium,Hanover,Indiana,NA,N
+265,Moratorium,Indianapolis,Indiana,NA,Y
+266,Moratorium,Lafayette,Indiana,NA,N
+267,Moratorium,Richmond,Indiana,NA,N
+268,Moratorium,South Bend,Indiana,NA,N
+269,Moratorium,Statewide (all),Indiana,12031020,N
+270,Moratorium,Sullivan,Indiana,NA,Y
+271,Moratorium,Whitestown,Indiana,NA,N
+272,Moratorium,Ames,Iowa,50029,N
+273,Moratorium,Boone,Iowa,12934,N
+274,Moratorium,Cedar Rapids,Iowa,129214,N
+275,Moratorium,Council Bluffs Water Works,Iowa,63795,N
+276,Moratorium,Des Moines,Iowa,233020,N
+277,Moratorium,Dubuque,Iowa,58485,N
+278,Moratorium,Fayette ,Iowa,1338,N
+279,Moratorium,Glidden,Iowa,1146,N
+280,Moratorium,Iowa City,Iowa,63265,N
+281,Moratorium,Marion,Iowa,37878,N
+282,Moratorium,Muscatine ,Iowa,24386,N
+283,Moratorium,North Liberty,Iowa,18311,N
+284,Moratorium,Panora,Iowa,1189,N
+285,Moratorium,Sioux City ,Iowa,82759,N
+286,Moratorium,Statewide (regulated),Iowa,165785,N
+287,Moratorium,Williamsburg,Iowa,3068,N
+288,Moratorium,Blue Rapids,Kansas,NA,N
+289,Moratorium,De Soto,Kansas,NA,N
+290,Moratorium,Lawrence,Kansas,NA,N
+291,Moratorium,Salina,Kansas,NA,N
+292,Moratorium,Statewide (all),Kansas,2852132,N
+293,Moratorium,Topeka,Kansas,NA,N
+294,Moratorium,Water District 1,Kansas,NA,N
+295,Moratorium,Wichita,Kansas,NA,N
+296,Moratorium,Ashland,Kentucky,44402,N
+297,Moratorium,Bowling Green,Kentucky,44912,N
+298,Moratorium,Corbin Utility Commission,Kentucky,16065,N
+299,Moratorium,Danville,Kentucky,32600,Y
+300,Moratorium,Frankfort Electric and Water Plant Board,Kentucky,52153,N
+301,Moratorium,Georgetown Municipal Water & Sewer Service,Kentucky,35714,N
+302,Moratorium,Hopkinsville Water Environment Authority ,Kentucky,41350,N
+303,Moratorium,Louisville Water,Kentucky,764769,N
+304,Moratorium,Nicholasville,Kentucky,34253,N
+305,Moratorium,Owensboro,Kentucky,58408,N
+306,Moratorium,Paducah,Kentucky,64013,N
+307,Moratorium,Statewide (regulated),Kentucky,2840152,N
+308,Moratorium,Warren,Kentucky,NA,N
+309,Moratorium,Winchester,Kentucky,32213,Y
+310,Moratorium,Baker,Louisiana,13855,N
+311,Moratorium,Baton Rouge,Louisiana,527067,N
+312,Moratorium,Jefferson Parish,Louisiana,432552,Y
+313,Moratorium,Marksville,Louisiana,7593,N
+314,Moratorium,Monroe,Louisiana,52572,N
+316,Moratorium,Shreveport,Louisiana,201000,N
+317,Moratorium,Statewide (regulated),Louisiana,1160370,N
+318,Moratorium,Portland,Maine,NA,N
+319,Moratorium,Statewide (all),Maine,678779,N
+321,Moratorium,Centreville,Maryland,NA,N
+322,Moratorium,Statewide (all),Maryland,5327424,N
+323,Moratorium,WSSC,Maryland,NA,N
+324,Moratorium,Boston,Massachusetts,617594,N
+326,Moratorium,Springfield,Massachusetts,230331,N
+327,Moratorium,Statewide (regulated),Massachusetts,230557,N
+328,Moratorium,Algonac,Michigan,NA,Y
+329,Moratorium,Battle Creek,Michigan,NA,Y
+330,Moratorium,Cadillac,Michigan,NA,Y
+331,Moratorium,Chesaning,Michigan,NA,Y
+332,Moratorium,Clay Township,Michigan,NA,N
+333,Moratorium,Fennville,Michigan,NA,N
+335,Moratorium,Grand Ledge,Michigan,NA,Y
+336,Moratorium,Grand Rapids,Michigan,NA,Y
+337,Moratorium,Kalamazoo,Michigan,NA,Y
+338,Moratorium,Lansing,Michigan,NA,Y
+339,Moratorium,Meridian Township,Michigan,NA,N
+340,Moratorium,Port Huron,Michigan,NA,N
+341,Moratorium,Saginaw,Michigan,NA,N
+342,Moratorium,Statewide (all),Michigan,7321942,Y
+343,Moratorium,Three Rivers,Michigan,NA,N
+344,Moratorium,Benton Harbor,Michigan ,NA,N
+345,Moratorium,Detroit,Michigan ,NA,Y
+346,Moratorium,Shelby,Michigan ,NA,N
+347,Moratorium,Duluth,Minnesota,86859,N
+348,Moratorium,Eveleth,Minnesota,3770,N
+349,Moratorium,Mankato,Minnesota,42803,N
+350,Moratorium,Minneapolis,Minnesota,423990,N
+351,Moratorium,New London,Minnesota,1251,N
+352,Moratorium,Proctor,Minnesota,3088,N
+353,Moratorium,Red Wing ,Minnesota,16459,N
+354,Moratorium,Rochester ,Minnesota,114011,N
+355,Moratorium,St. Paul,Minnesota,395131,N
+356,Moratorium,Houlka,Mississippi,1707,N
+357,Moratorium,Oxford,Mississippi,25000,N
+358,Moratorium,Statewide (regulated),Mississippi,66009,N
+359,Moratorium,Tupelo,Mississippi,38842,N
+360,Moratorium,Bonne Terre ,Missouri,3800,N
+361,Moratorium,Cole County PWSD No. 2,Missouri,12945,N
+362,Moratorium,Cole County PWSD No. 3,Missouri,1875,N
+363,Moratorium,Elsberry,Missouri,1963,N
+364,Moratorium,Herculaneum City,Missouri,3468,N
+365,Moratorium,Joplin,Missouri,55309,N
+366,Moratorium,Kansas City,Missouri,471767,N
+367,Moratorium,Kirkwood,Missouri,28000,N
+368,Moratorium,Maryville,Missouri,11972,N
+370,Moratorium,Owensville,Missouri,2800,N
+371,Moratorium,St Louis,Missouri,315685,N
+372,Moratorium,Statewide (all),Montana,733724,N
+373,Moratorium,Navajo Tribal Utility Authority,Navajo Nation,145880,N
+374,Moratorium,Lincoln,Nebraska,280369,N
+375,Moratorium,Omaha MUD,Nebraska,554091,N
+377,Moratorium,Churchill County,Nevada,953,N
+378,Moratorium,Henderson,Nevada,275000,N
+379,Moratorium,Las Vegas Valley Water District,Nevada,1347550,N
+380,Moratorium,North Las Vegas,Nevada,306570,N
+381,Moratorium,Nye County,Nevada,451,N
+382,Moratorium,Storey County,Nevada,1420,N
+383,Moratorium,Truckee Meadows Water Authority,Nevada,311932,N
+384,Moratorium,West Wendover,Nevada,4200,N
+385,Moratorium,Manchester,New Hampshire,NA,N
+386,Moratorium,Statewide (all),New Hampshire,893290,N
+387,Moratorium,Alpha,New Jersey,NA,N
+388,Moratorium,East Orange,New Jersey,NA,N
+389,Moratorium,Jersey City,New Jersey,NA,N
+391,Moratorium,Passaic Valley Water Commission,New Jersey,NA,N
+392,Moratorium,Statewide (all),New Jersey,8845982,N
+393,Moratorium,Statewide (regulated),New Jersey,NA,N
+394,Moratorium,Trenton,New Jersey,NA,N
+395,Moratorium,Albuquerque,New Mexico,601983,N
+396,Moratorium,Farmington,New Mexico,38000,N
+397,Moratorium,Las Cruces,New Mexico,102308,N
+398,Moratorium,Santa Fe,New Mexico,78247,N
+399,Moratorium,Statewide (regulated),New Mexico,162486,N
+401,Moratorium,Binghamton,New York,47600,N
+402,Moratorium,Erie County Water Authority,New York,328225,Y
+404,Moratorium,Niagara Falls,New York,50193,N
+405,Moratorium,Rochester City,New York,214000,N
+406,Moratorium,Statewide (regulated),New York,1103531,N
+407,Moratorium,Suffolk County Water Authority ,New York,1100000,N
+408,Moratorium,Town of Hempstead,New York,110000,N
+409,Moratorium,Buffalo,New York ,276000,Y
+410,Moratorium,Asheville,North Carolina,NA,N
+411,Moratorium,Black Mountain,North Carolina,NA,Y
+412,Moratorium,Brunswick Regional Water and Sewer,North Carolina,NA,N
+413,Moratorium,Cape Fear Public Utility Authority ,North Carolina,NA,Y
+414,Moratorium,Cary,North Carolina,NA,N
+415,Moratorium,Charlotte,North Carolina,NA,Y
+416,Moratorium,Conover,North Carolina,NA,N
+417,Moratorium,Davie County,North Carolina,NA,N
+418,Moratorium,Durham,North Carolina,NA,N
+419,Moratorium,Elkin,North Carolina,NA,Y
+420,Moratorium,Fayetteville,North Carolina,NA,N
+421,Moratorium,Gastonia,North Carolina,NA,N
+422,Moratorium,Greensboro,North Carolina,NA,Y
+423,Moratorium,Harnett County,North Carolina,NA,N
+425,Moratorium,Hendersonville,North Carolina,NA,Y
+426,Moratorium,Montreat,North Carolina,NA,N
+427,Moratorium,Murfreesboro,North Carolina,NA,N
+428,Moratorium,Nags Head,North Carolina,NA,N
+429,Moratorium,Orange Water and Sewer Authority,North Carolina,NA,N
+430,Moratorium,Raleigh,North Carolina,NA,N
+431,Moratorium,Robbins,North Carolina,NA,N
+432,Moratorium,Rose Hill,North Carolina,NA,N
+433,Moratorium,Salisbury,North Carolina,NA,Y
+434,Moratorium,Salisbury,North Carolina,NA,N
+435,Moratorium,Seaboard,North Carolina,NA,N
+436,Moratorium,Snow Hill,North Carolina,NA,N
+437,Moratorium,Statewide (all),North Carolina,8596296,N
+438,Moratorium,Statewide (regulated),North Carolina,NA,N
+439,Moratorium,Tuckaseigee ,North Carolina,NA,Y
+440,Moratorium,Waynesville,North Carolina,NA,N
+441,Moratorium,Winston Salem,North Carolina,NA,Y
+442,Moratorium,Grand Forks,North Dakota,57339,N
+443,Moratorium,Akron,Ohio,NA,Y
+444,Moratorium,Alliance,Ohio,NA,N
+445,Moratorium,Athens,Ohio,NA,N
+446,Moratorium,Chillicothe,Ohio,NA,N
+448,Moratorium,Cleveland,Ohio,NA,Y
+449,Moratorium,Columbus,Ohio,NA,N
+450,Moratorium,Dayton,Ohio,NA,N
+451,Moratorium,Delaware City,Ohio,NA,Y
+452,Moratorium,Findlay,Ohio,NA,N
+454,Moratorium,Huber Heights,Ohio,NA,N
+455,Moratorium,Kent,Ohio,NA,Y
+456,Moratorium,Lakewood,Ohio,NA,N
+457,Moratorium,Leesburg,Ohio,NA,N
+458,Moratorium,Lorain,Ohio,NA,Y
+459,Moratorium,Medina,Ohio,NA,N
+460,Moratorium,Miami County ,Ohio,NA,N
+461,Moratorium,Middletown,Ohio,NA,N
+462,Moratorium,Montgomery County,Ohio,NA,N
+463,Moratorium,Nelsonville,Ohio,NA,N
+464,Moratorium,Sandusky,Ohio,NA,N
+465,Moratorium,Springfield,Ohio,NA,N
+466,Moratorium,Statewide (all),Ohio,10281811,Y
+467,Moratorium,Toledo,Ohio,NA,Y
+468,Moratorium,Troy,Ohio,NA,Y
+469,Moratorium,Trumbull County,Ohio,NA,N
+470,Moratorium,Vermilion,Ohio,NA,N
+471,Moratorium,Westerville,Ohio,NA,N
+472,Moratorium,Youngstown,Ohio,NA,N
+473,Moratorium,Chickasha,Oklahoma,16036,N
+474,Moratorium,Oklahoma City,Oklahoma,644000,N
+475,Moratorium,Tulsa,Oklahoma,471000,Y
+476,Moratorium,Albany,Oregon,56100,N
+477,Moratorium,Aurora,Oregon,985,N
+478,Moratorium,Beaverton,Oregon,70000,N
+479,Moratorium,Bend,Oregon,62091,N
+480,Moratorium,Canby,Oregon,16866,N
+481,Moratorium,Coos Bay-North Bend Water Board,Oregon,34500,N
+482,Moratorium,Corvallis,Oregon,56000,N
+483,Moratorium,Eugene,Oregon,168000,N
+484,Moratorium,Gresham,Oregon,73932,N
+485,Moratorium,Hermiston,Oregon,17107,N
+486,Moratorium,Independence,Oregon,8600,N
+487,Moratorium,La Grande,Oregon,13245,N
+488,Moratorium,Lincoln,Oregon,20830,N
+489,Moratorium,McMinnville,Oregon,33896,N
+490,Moratorium,Medford Water Commission,Oregon,91000,N
+491,Moratorium,Ontario,Oregon,14465,N
+492,Moratorium,Portland,Oregon,614059,Y
+493,Moratorium,Redmond,Oregon,27427,N
+494,Moratorium,Seal Water District,Oregon,5500,N
+495,Moratorium,Wood Village,Oregon,3907,N
+496,Moratorium,Aliquippa,Pennsylvania,15685,Y
+497,Moratorium,Antrim Township Municipal Authority,Pennsylvania,975,N
+498,Moratorium,Bethlehem,Pennsylvania,117259,N
+499,Moratorium,Bucks County Water & Sewer Authority,Pennsylvania,52621,N
+500,Moratorium,Cambria County (all utilities),Pennsylvania,146064,N
+501,Moratorium,Capital Region Water,Pennsylvania,66540,Y
+502,Moratorium,Chester Water Authority,Pennsylvania,140437,N
+503,Moratorium,Easton Suburban Water Authority,Pennsylvania,96867,N
+504,Moratorium,Erie City Water Authority,Pennsylvania,220001,N
+505,Moratorium,Lancaster,Pennsylvania,120000,N
+506,Moratorium,Lehigh County Authority- Allentown,Pennsylvania,118000,N
+507,Moratorium,Lower Swatara Municipal Authority,Pennsylvania,8836,N
+508,Moratorium,Monroeville Municipal Authority ,Pennsylvania,48500,Y
+509,Moratorium,North Penn Water Authority,Pennsylvania,91941,N
+510,Moratorium,North Wales Water Authority,Pennsylvania,72496,N
+511,Moratorium,Philadelphia,Pennsylvania,1600000,Y
+513,Moratorium,Reading Area Water Authority,Pennsylvania,87000,Y
+514,Moratorium,Statewide (regulated),Pennsylvania,3576605,N
+515,Moratorium,West View Water Authority,Pennsylvania,2.00E+05,N
+516,Moratorium,Wilkinsburg-Penn Joint Water Authority,Pennsylvania,125000,N
+517,Moratorium,Wyoming Valley Sanitary Authority,Pennsylvania,117259,N
+518,Moratorium,Statewide (all),Puerto Rico,3709552,N
+519,Moratorium,East Providence,Rhode Island,48688,N
+520,Moratorium,Providence,Rhode Island,310060,N
+521,Moratorium,Statewide (regulated),Rhode Island,38557,N
+522,Moratorium,Charleston,South Carolina,234333,N
+523,Moratorium,Columbia,South Carolina,304257,N
+524,Moratorium,Joint Municipal Water & Sewer Commission,South Carolina,34317,N
+525,Moratorium,Spartanburg,South Carolina,125375,N
+526,Moratorium,Statewide (Regulated),South Carolina,318211,N
+527,Moratorium,Brookings,South Dakota,22298,N
+528,Moratorium,Rapid City,South Dakota,66481,N
+529,Moratorium,Sioux Falls,South Dakota,190326,N
+531,Moratorium,Brentwood ,Tennessee,29513,N
+532,Moratorium,Clarksville,Tennessee,215421,N
+533,Moratorium,Gallatin,Tennessee,50162,N
+534,Moratorium,Gatlinburg,Tennessee,7958,N
+535,Moratorium,Knoxville,Tennessee,241714,N
+536,Moratorium,Memphis,Tennessee,699244,N
+537,Moratorium,Nashville,Tennessee,702407,N
+538,Moratorium,Oak Ridge ,Tennessee,38162,N
+539,Moratorium,Statewide (regulated),Tennessee,216731,N
+540,Moratorium,Amarillo,Texas,196429,N
+541,Moratorium,Arlington ,Texas,383950,N
+542,Moratorium,Austin,Texas,981783,N
+544,Moratorium,Buda,Texas,11530,N
+545,Moratorium,Dallas,Texas,1286380,N
+546,Moratorium,Denton,Texas,131712,N
+547,Moratorium,Edinburg,Texas,77100,N
+548,Moratorium,El Paso,Texas,672538,N
+549,Moratorium,Fort Worth,Texas,853762,N
+550,Moratorium,Frisco West Water Control District,Texas,159000,N
+551,Moratorium,Graham,Texas,8792,N
+552,Moratorium,Harlingen,Texas,85900,N
+553,Moratorium,Houston,Texas,2319603,N
+555,Moratorium,Leander,Texas,43764,N
+556,Moratorium,Lubbock,Texas,266263,N
+557,Moratorium,Mission,Texas,77058,N
+558,Moratorium,Palestine,Texas,27477,N
+560,Moratorium,San Antonio,Texas,1999472,N
+561,Moratorium,Stamford,Texas,3126,N
+562,Moratorium,Statewide (regulated),Texas,894284,N
+563,Moratorium,Temple,Texas,85884,N
+564,Moratorium,Wichita Falls,Texas,103000,Y
+565,Moratorium,Hardin,Texas ,4859,N
+566,Moratorium,Salt Lake City,Utah,343850,N
+567,Moratorium,Sandy City,Utah,99750,N
+568,Moratorium,Burlington,Vermont,42000,N
+569,Moratorium,South Burlington,Vermont,15296,N
+570,Moratorium,Statewide (regulated),Vermont,66564,N
+571,Moratorium,Virgin Islands Water and Power Authority ,Virgin Islands,69000,N
+572,Moratorium,Albemarle County Service Authority,Virginia,66983,N
+573,Moratorium,Amherst,Virginia,2190,N
+574,Moratorium,Arlington County,Virginia,215000,N
+575,Moratorium,Blacksburg,Virginia,34578,N
+576,Moratorium,Chesapeake,Virginia,199030,N
+577,Moratorium,Chesterfield,Virginia,305392,Y
+578,Moratorium,Danville,Virginia,43055,N
+579,Moratorium,Fairfax Water,Virginia,1074422,Y
+580,Moratorium,Goochland,Virginia,3165,Y
+581,Moratorium,Hanover,Virginia,71000,Y
+582,Moratorium,Henrico County,Virginia,292000,Y
+583,Moratorium,Leesburg,Virginia,61540,N
+584,Moratorium,Loudoun,Virginia,286202,N
+585,Moratorium,Lynchburg,Virginia,80995,N
+586,Moratorium,Manassas,Virginia,41757,N
+587,Moratorium,Martinsville,Virginia,13600,N
+588,Moratorium,Newport,Virginia,407300,N
+589,Moratorium,Prince William County Service Authority,Virginia,283001,N
+590,Moratorium,Richmond,Virginia,197000,Y
+591,Moratorium,Spotsylvania County,Virginia,84390,Y
+592,Moratorium,Stafford Utilities ,Virginia,112285,Y
+593,Moratorium,Statewide (regulated),Virginia,465017,N
+594,Moratorium,Staunton,Virginia,24528,N
+595,Moratorium,Suffolk,Virginia,67487,N
+596,Moratorium,Virginia Beach,Virginia,446067,N
+597,Moratorium,Washington County Service Authority,Virginia,47574,N
+598,Moratorium,Western Virginia Water Authority,Virginia,155000,N
+600,Moratorium,Bellevue,Washington,NA,N
+602,Moratorium,Camas,Washington,NA,N
+603,Moratorium,Chelan County PUD,Washington,NA,N
+604,Moratorium,Clark,Washington,NA,Y
+607,Moratorium,Lake Forest Park Water District,Washington,NA,N
+608,Moratorium,Lakehaven,Washington,NA,N
+610,Moratorium,Long Beach,Washington,NA,N
+614,Moratorium,Parkland,Washington,NA,N
+615,Moratorium,Pasco,Washington,NA,N
+616,Moratorium,Pullman,Washington,NA,N
+617,Moratorium,Puyallup,Washington,NA,N
+618,Moratorium,Redmond,Washington,NA,N
+621,Moratorium,Seattle,Washington,NA,N
+623,Moratorium,Snohomish County Public Utility District,Washington,NA,N
+624,Moratorium,Snoqualmie,Washington,NA,N
+625,Moratorium,Spokane,Washington,NA,N
+626,Moratorium,Statewide (all),Washington,7651613,Y
+627,Moratorium,Tacoma,Washington,NA,N
+629,Moratorium,Walla Walla,Washington,NA,N
+630,Moratorium,Wenatchee,Washington,NA,N
+631,Moratorium,Fairmont,West Virginia,29864,Y
+632,Moratorium,Morgantown,West Virginia,58023,N
+633,Moratorium,Statewide (Regulated),West Virginia,490625,N
+638,Moratorium,Statewide (all),Wisconsin,4119930,Y
+315,Moratorium ,New Orleans ,Louisiana,291044,Y
+447,Moratorium ,Cincinnati ,Ohio,NA,Y
+453,Moratorium ,Hamilton,Ohio,NA,Y
+227,Pre-existing Moratorium,Chicago,Illinois,2700000,N
+320,Pre-existing Moratorium,Baltimore,Maryland,NA,NA - no shutoffs since 2017
+334,Pre-existing Moratorium,Flint,Michigan,NA,Y
+512,Pre-existing Moratorium,Pittsburgh,Pennsylvania,520000,N
