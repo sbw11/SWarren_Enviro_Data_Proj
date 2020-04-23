@@ -1,13 +1,120 @@
 ---
-title: "Shutoff Moratorium Maps"
-author: "Simon Warren"
-date: "4/13/2020"
-output: html_document
+output: 
+  pdf_document:
+    keep_tex: yes
+    fig_caption: yes
+    number_sections: yes
+geometry: margin=2.54cm
+title: "Insert title of project here"
+subtitle: "Web address for GitHub repository"
+author: "Name"
+fontsize: 12pt
+mainfont: Times New Roman
+
 ---
 
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(tigris)
+# Set your working directory
+setwd("C:/Users/simon/OneDrive - Duke University/Enviro_Data_Analytics_2020/SWarren_Enviro_Data_Proj/Code")
+# Load your packages
+
+library("tidyverse")
+library("viridis")
+library("rvest")
+library("readr")
+library("dplyr")
+library("tidyr")
+library("ggplot2")
+library("purrr")
+library("sf")
+library("ggmap")
+library("rgdal")
+library("openintro")
+library("totalcensus")
+library("tigris")
+getwd()
+# Set your ggplot theme
+mytheme <- theme_bw(base_size = 14) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "right")
+# Load your datasets
+SDWIS_Raw<-read.csv("../Data/Raw/SDWIS_Raw.csv")
+  #Webscraping
+url <-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSU9gYc6bZ73BJFK1IpxTSSq5IRA0FmUqLWRvVbOw2kVXUzGrZiA5roEDVAjAP510Uk56EmhnypEc5T/pubhtml#"
+webpage <- read_html(url)
+Status <- webpage %>% html_nodes(".s1:nth-child(2)") %>% html_text()
+City <- webpage %>% html_nodes(".s1:nth-child(3)") %>% html_text()
+State <- webpage %>% html_nodes(".s1:nth-child(4)") %>% html_text()
+ServicePop <- webpage %>% html_nodes(".s1:nth-child(5) , .s2") %>% html_text()
+Restoration <- webpage %>% html_nodes("tr:nth-child(642) td:nth-child(6) , .softmerge:nth-child(6) .softmerge-inner, .s1:nth-child(6)") %>% html_text()
+
+Moratoria_List<-data.frame(Status, City, State, ServicePop, Restoration)
+
+Cities_covered_by_states<-Moratoria_List %>% filter(ServicePop=="included in state total")
+
+Moratoria_List <- Moratoria_List %>%
+  filter(State != "" & State != "Partial" & State!="State") 
+Moratoria_List$ServicePop <- str_replace(Moratoria_List$ServicePop,pattern = "([,])", replacement = "")
+Moratoria_List$ServicePop <- str_replace(Moratoria_List$ServicePop,pattern = "([,])", replacement = "")
+Moratoria_List$ServicePop<-as.numeric(Moratoria_List$ServicePop)
+Moratoria_List$City <- str_replace(Moratoria_List$City,pattern = "New York City", replacement = "New York")
+
+#write.csv(Moratoria_List,  
+          #file = "../Data/Processed/MoratoriaList_41920.csv")
+
+SDWIS_Processed<-SDWIS_Raw %>% select(WATER_SYSTEM.PWS_NAME, WATER_SYSTEM.STATE_CODE, WATER_SYSTEM.CITY_NAME, WATER_SYSTEM.ZIP_CODE, WATER_SYSTEM.COUNTIES_SERVED)
+```
+
+
+# Rationale and Research Questions
+
+
+
+\newpage
+
+# Dataset Information
+
+
+
+\newpage
+
+# Exploratory Analysis 
+Total coverage (ie polygons)
+
+\newpage
+
+# Analysis
+
+
+
+## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
+
+## Question 2: 
+
+
+
+
+\newpage
+
+# Summary and Conclusions
+
+
+\newpage
+
+# References
+<add references here if relevant, otherwise delete this section> 
+All maps were spatial representations of Food and Water Watch's list of cities and states ordering water shutoff moratoria. The live list, along with sources of each order, can be found at this site: https://docs.google.com/spreadsheets/d/e/2PACX-1vSU9gYc6bZ73BJFK1IpxTSSq5IRA0FmUqLWRvVbOw2kVXUzGrZiA5roEDVAjAP510Uk56EmhnypEc5T/pubhtml
+
+```
+
 ```
 
 ## R Markdown
@@ -16,16 +123,258 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+### Webscraping
+```{r}
+
 ```
 
-## Including Plots
+### States only
+```{r}
+states_names<-c("Alabama","Alaska", "Arizona","Arkansas","California","Colorado","Connecticut","Delaware", "District of Columnbia", "Florida", "Georgia", "Hawaii", "Idaho","Illinois","Indiana", "Iowa","Kansas","Kentucky","Louisiana","Maine", "Maryland", "Massachusetts", "Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "Virgin Islands", "Guam", "American Samoa")
+StatesOnly<-Moratoria_List %>% filter (City == "Statewide (all)"|State=="DC")
+CitiesOnly<-Moratoria_List %>% filter (City != "Statewide (all)" & State != "DC" & State!="Navajo Nation")
 
-You can also embed plots, for example:
+CitiesOnly$StateCode<-state2abbr(CitiesOnly$State)
+CitiesOnly$FullName<- paste(CitiesOnly$City,CitiesOnly$StateCode)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+SovOnly<-Moratoria_List %>% filter (City != "Statewide (all)" & !(State %in% states_names))
+
+
+CountiesPrep<-CitiesOnly
+CountiesPrep$City<-gsub("(County).*","\\1",CountiesPrep$City)
+CountiesPrep$FullName<- paste(CountiesPrep$City,CountiesPrep$StateCode)
+
+
+
+SDWIS_Processed$FullName<-paste (SDWIS_Processed$WATER_SYSTEM.PWS_NAME, SDWIS_Processed$WATER_SYSTEM.STATE_CODE)
+WaterDist<-CitiesOnly 
+WaterDist$FullName<-toupper(WaterDist$FullName)
+WaterDist<-inner_join(WaterDist, SDWIS_Processed, by="FullName")
+WaterDist$WATER_SYSTEM.ZIP_CODE<-gsub("(.*)-.*","\\1",WaterDist$WATER_SYSTEM.ZIP_CODE)
+WaterDist$CountyFullName<-paste(WaterDist$WATER_SYSTEM.COUNTIES_SERVED, "County",WaterDist$WATER_SYSTEM.STATE_CODE)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Maps
+```{r}
+
+States_raw<-states(cb = FALSE, resolution = "500k", year = NULL, class="sf") #%>% #filter_state(states_of_interest)
+
+
+#States_close<-States_raw %>% filter(NAME!="American Samoa" & NAME!="Guam" & NAME!="Commonwealth of the Northern Mariana Islands" & NAME!="United States Virgin Islands")
+#States_close<-st_crop(States_raw, xmin=-130, xmax=-60, ymin = 0, ymax = 120)
+
+
+State_bounds<-st_geometry(States_raw)
+class(State_bounds)
+State_bounds<-st_crop(State_bounds, xmin=-125, xmax=-65, ymin = 20, ymax = 50)
+
+#plot(State_bounds)
+#States_tabular<-st_drop_geometry(States_raw)
+
+State_map<-geo_join(States_raw,StatesOnly, "NAME", "State")
+State_map<-drop_na(State_map)
+States_map_tabular<-st_drop_geometry(State_map)
+
+#stateCode = c('AL','AK','AR','AZ','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA',
+ #             'KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM',
+  #            'NY','NC','ND','OH','OK','OR','PA','PR','RI','SC','SD','TN','TX','UT','VT','VA',
+   #           'WA','WV','WI','WY')
+
+#places
+places_raw<-us_cities()
+#A major limitation is that we did not try doing "places". Many cities were left off because they do not get classified as towns.
+
+#towns
+towns_raw<-core_based_statistical_areas(cb = FALSE, resolution = "500k", year = NULL, class="sf")
+towns_raw$NAME <- str_replace(towns_raw$NAME,pattern = "([,])", replacement = "")
+towns_tabular<-st_drop_geometry(towns_raw)
+towns_map<-geo_join(towns_raw,CitiesOnly, "NAME", "FullName")
+towns_map<-drop_na(towns_map)
+towns_map_tabular<-st_drop_geometry(towns_map)
+towns_map<-st_crop(towns_map, xmin=-125, xmax=-65, ymin = 24, ymax = 65)
+
+#Cities
+cities_raw<-urban_areas(cb=TRUE, class="sf")
+cities_tabular<-st_drop_geometry(cities_raw)
+cities_raw$NAME10<-gsub("(.*)--.*","\\1",cities_raw$NAME10)
+cities_raw$NAME10<-gsub("(.*)--.*","\\1",cities_raw$NAME10)
+cities_raw$NAME10 <- str_replace(cities_raw$NAME10,pattern = "([,])", replacement = "")
+cities_tabular<-st_drop_geometry(cities_raw)
+cities_map<-geo_join(cities_raw, CitiesOnly, "NAME10", "FullName")
+cities_map<-drop_na(cities_map)
+cities_map_tabular<-st_drop_geometry(cities_map)
+cities_map<-st_crop(cities_map, xmin=-125, xmax=-65, ymin = 24, ymax = 65)
+
+#Very large metro areas
+options(tigris_use_cache = FALSE)
+metro_raw<-metro_divisions(class="sf", refresh=TRUE)
+metro_tabular<-st_drop_geometry(metro_raw)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*),.*","\\1",metro_raw$NAME)
+metro_map<-geo_join(metro_raw,CitiesOnly, "NAME", "City")
+metro_map<-drop_na(metro_map)
+metro_map_tabular<-st_drop_geometry(metro_map)
+metro_map<-st_crop(metro_map, xmin=-125, xmax=-65, ymin = 24, ymax = 65)
+
+#Counties
+options(tigris_use_cache = FALSE)
+counties_raw<-counties(class="sf", refresh=TRUE)
+counties_tabular<-st_drop_geometry(counties_raw)
+counties_processed<-counties_raw
+counties_processed$STATEID<-convert_fips_to_names(counties_processed$STATEFP, geo_header = "STATE")
+counties_processed$FullName<- paste(counties_processed$NAMELSAD,counties_processed$STATEID)
+counties_tabular<-st_drop_geometry(counties_processed)
+counties_map<-geo_join(counties_processed, CountiesPrep, "FullName", "FullName")
+counties_map<-counties_map %>% filter(ServicePop!="NA")
+counties_map_tabular<-st_drop_geometry(counties_map)
+
+#Unmatched Water Districts
+WaterDistBounds<-counties_processed
+WaterDistBounds_tabular<-st_drop_geometry(WaterDistBounds)
+WaterDist_map<-geo_join(WaterDistBounds, WaterDist, "FullName", "CountyFullName")
+WaterDist_map<-WaterDist_map %>% filter(ServicePop!="NA")
+WaterDist_map_tabular<-st_drop_geometry(WaterDist_map)
+
+#NativeAreas
+nativeareas_raw<-native_areas(cb=TRUE, class="sf",refresh=TRUE)
+nativeareas_tabular<-st_drop_geometry(nativeareas_raw)
+nativeareas_map<-geo_join(nativeareas_raw, SovOnly, "NAME", "State")
+nativeareas_map<-nativeareas_map %>% filter(ServicePop!="NA")
+nativeareas_map_tabular<-st_drop_geometry(nativeareas_map)
+
+pdf((file = "../Output/CoverageMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = WaterDist_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = counties_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = nativeareas_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = State_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?")+
+   xlab("Longitude") + ylab("Latitude") +
+    ggtitle("Fig. 1: States and Cities with Water Shutoff Moratoria under COVID-19", subtitle = paste0("Several states, cities, counties, tribes, and towns are ordering a stop to water shutoffs, but most are not mandating \nrestoration of services, and large states like New York, Florida, and Texas have not ordered state-wide moratoria."))+
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+dev.off()
+
+#Point files
+state_points<-st_centroid(State_map)
+state_pts_tab<-st_drop_geometry(state_points)
+state_points<-state_points %>% select(Status, City, NAME, ServicePop, Restoration)
+state_points<-state_points %>% rename("State"="NAME")
+
+county_points<-st_centroid(counties_map)
+county_pts_tab<-st_drop_geometry(county_points)
+county_points<-county_points %>% select(Status, City, State, ServicePop, Restoration)
+
+metro_points<-st_centroid(metro_map)
+metro_pts_tab<-st_drop_geometry(metro_points)
+metro_points<-metro_points %>% select(Status, NAME, State, ServicePop, Restoration)
+metro_points<-metro_points %>% rename("City"="NAME")
+
+town_points<-st_centroid(towns_map)
+town_pts_tab<-st_drop_geometry(town_points)
+town_points<-town_points %>% select(Status, City, State, ServicePop, Restoration)
+
+cities_points<-st_centroid(cities_map)
+cities_pts_tab<-st_drop_geometry(cities_points)
+cities_points<-cities_points %>% select(Status, City, State, ServicePop, Restoration)
+
+waterdist_points<-st_centroid(WaterDist_map)
+waterdist_pts_tab<-st_drop_geometry(waterdist_points)
+waterdist_points<-waterdist_points %>% select(Status, City, State, ServicePop, Restoration)
+
+nativearea_points<-st_centroid(nativeareas_map)
+nativearea_pts_tab<-st_drop_geometry(nativearea_points)
+nativearea_points<-nativearea_points %>% select(Status, City, NAME, ServicePop, Restoration)
+nativearea_points<-nativearea_points %>% rename("State"="NAME")
+
+all_points<-rbind(state_points,county_points,metro_points,town_points,cities_points,waterdist_points,nativearea_points)
+all_points_tabular<-st_drop_geometry(all_points)
+
+whoshouldbein<-anti_join(Moratoria_List,Cities_covered_by_states)
+whosleft<-anti_join(Moratoria_List,all_points_tabular)
+
+pdf((file = "../Output/CountiesServicePopMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = county_points, aes(fill = Restoration, size = ServicePop)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?", size = "Service Population")+
+   xlab("Longitude") + ylab("Latitude") +
+    ggtitle("Fig. 2: Population Covered by Water Shutoff Moratoria under COVID-19", subtitle = paste0("Statewide moratoria cover large populations, but in many cases, large city or county orders also cover significant numbers."))+
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+dev.off()
+
+pdf((file = "../Output/ServicePopMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = all_points, aes(color = Restoration, size = ServicePop)) +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+    scale_size_continuous(range = c(0, 20))+
+  labs (color = "Service Restorations?", size = "Service Population")+
+   xlab("Longitude") + ylab("Latitude") +
+    ggtitle("Fig. 2: Population Covered by Water Shutoff Moratoria under COVID-19", subtitle = paste0("Statewide moratoria cover large populations, but in many cases, large city or county orders also cover significant numbers."))+
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+dev.off()
+```
+```{r}
+pdf((file = "../Output/StateMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = State_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+  labs (color = "Service Restorations?", fill = "Service Population") +
+  theme_bw()
+dev.off()
+
+pdf((file = "../Output/RawMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = States_close)
+dev.off()
+
+pdf((file = "../Output/TownsMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = towns_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+  geom_sf(data = cities_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+  labs (color = "Service Restorations?", fill = "Service Population") +
+  theme_bw()
+dev.off()
+
+pdf((file = "../Output/MetrosCitiesStatesMap.pdf"), width = 11, height = 8.5)
+ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = State_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+        scale_color_manual(values = c("#7fcdbb", "##9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +
+        scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(color = Restoration, fill = ServicePop)) +
+  scale_fill_gradient(low="white", high = "blue") +    
+      scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (color = "Service Restorations?", fill = "Population covered by moratorium")+
+   xlab("Longitude") + ylab("Latitude") +
+    ggtitle("Fig. 1: States and Cities with Water Shutoff Moratoria under COVID-19", subtitle = paste0("States, cities, and towns with a wide range of service populations are ordering a stop to water shutoffs, but most are not mandating \nrestoration of services, and large states like New York, Florida, and Texas have not ordered state-wide moratoria."))+
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+dev.off()
+```
+
