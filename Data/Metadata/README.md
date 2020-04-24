@@ -8,7 +8,7 @@ Repository for Simon Warren's final project in Environmental Data Analytics, Duk
 
 ## Summary
 
-This project is being completed as part of a Duke University Environmental Data Analytics class. The goal of the project is to create a visual representation of states, cities, counties, other administrative units, and water authorities that have announced moratoria on water shutoffs and reconnections during the COVID-19 pandemic. Currently most of the information comes from Food and Water Watch's (FWW) reporting on which governments have announced moratoria, and "live" data is kept on a spreadsheet, which does not visually depict the situation.The spreadsheet was created in March, 2020. Making a live version of this map would allow users to tell which governments have and have notput a moratorium on shutoffs quickly, and get the message out more quickly. This spreadsheet will be combined with US Census TIGER Lines for various levels of administrative areas, as well as SDWIS files for those water authorities with boundaries that do not match city or county boundaries. The map also shows which regions have announced moratoria on shutoffs but not reconnections and which have announced both, and depicts patterns in the size of populations served by the various bodies.
+This project is being completed as part of a Duke University Environmental Data Analytics class. The goal of the project is to create a visual representation of states, cities, counties, other administrative units, and water authorities that have announced moratoria on water shutoffs and reconnections during the COVID-19 pandemic. Currently most of the information comes from Food and Water Watch's (FWW) reporting on which governments have announced moratoria, and "live" data is kept on a spreadsheet, which does not visually depict the situation.The spreadsheet was created in March, 2020. Making a live version of this map would allow users to tell which governments have and have notput a moratorium on shutoffs quickly, and get the message out more quickly. This spreadsheet is combined with US Census TIGER Lines for various levels of administrative areas, as well as SDWIS files for those water authorities with boundaries that do not match city or county boundaries. The map also shows which regions have announced moratoria on shutoffs but not reconnections and which have announced both, and depicts patterns in the size of populations served by the various bodies.
 
 ## Investigators
 
@@ -65,19 +65,21 @@ WATER_SYSTEM.ZIP_CODE: Will be used as the location of the point for locations t
 
 ### TIGER Lines
 Places: Census-Designated Places, standing in for towns and cities
+Urban areas, urban clusters, metropolitan divisions: Different classes of cities/development.
 States: States
 Counties: Counties
 Native Areas: From the Census Bureau: "Federally recognized American Indian reservations and off-reservationtrust land areas, state-recognized American Indian reservations, and Hawaiian home lands (HHLs)."
 
 ## Scripts and code
 The Shutoff_Moratorium_Maps.rmd contains two parts.
-Exploratory scripts: Three polygon layers of states, counties, and towns, are created, and merged into one layer.
-A point layer of zip codes will also be created.
+Exploratory scripts: Layers of states, counties, and towns, are created, and joined to the FWW list.
 The most recent FWW spreadsheet will be datascraped and turned into a dataframe, and saved as a .csv.
 
-Analysis scripts: The FWW tabular data is joined to the spatial data based on FWW's "City" column, and polygons are filled with a color aesthetic based on whether a moratorium has been declared as well as whether reconnecctions have been ordered (green for both, blue for moratorium-only). Filling is based on a hierarchy-- if a statewide moratorium is ordered, the entire state will be filled regardless of which individual cities or counties have ordered moratoria. An alpha aesthetic displays the service population.
+Analysis scripts: The FWW tabular data is joined to the spatial data based on FWW's "City" column, and polygons are filled with a color aesthetic based on whether a moratorium has been declared as well as whether reconnecctions have been ordered (blue for both, green for moratorium-only). Filling is based on a hierarchy-- if a statewide moratorium is ordered, the entire state will be filled regardless of which individual cities or counties have ordered moratoria. 
 
-For water districts/authorities that do not correspond to a county or city, SDWIS PWS_NAMES are used to join to the FFW "City" column, and then joined to the layer of zipcodes. A size and alpha aesthetic will be used for said point to represent service population.
+For water districts/authorities that do not correspond to a county or city, SDWIS PWS_NAMES are used to join to the FFW "City" column, and then joined to the layer of counties.
+
+A second map converts all polygons to centroids, and then uses a size aesthetic to represent the service population.
 
 ## Quality assurance/quality control
 Shutoff orders are progressing quickly, and so some data is likely to be misreported. At the present, FWW's reporting will be assumed to be accurate, but this map should not be interpreted as a legal or governmental document.
