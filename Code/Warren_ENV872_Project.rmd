@@ -1,0 +1,474 @@
+---
+output: 
+  pdf_document:
+    keep_tex: yes
+    fig_caption: yes
+    number_sections: yes
+geometry: margin=2.54cm
+title: "Visually Representing State and Local Water Shutoff Moratoria During the COVID-19 Pandemic"
+subtitle: "https://github.com/sbw11/SWarren_Enviro_Data_Proj"
+author: "Simon Warren"
+fontsize: 12pt
+mainfont: Times New Roman
+
+---
+
+\newpage
+\tableofcontents 
+\newpage
+\listoffigures
+\newpage
+
+```{r setup, include=FALSE, warning=FALSE}
+# Set your working directory
+setwd("C:/Users/simon/OneDrive - Duke University/Enviro_Data_Analytics_2020/SWarren_Enviro_Data_Proj/Code")
+# set your own directory here
+
+# Load your packages
+library("tidyverse")
+library("viridis")
+library("rvest")
+library("readr")
+library("dplyr")
+library("tidyr")
+library("ggplot2")
+library("purrr")
+library("sf")
+library("ggmap")
+library("rgdal")
+library("openintro")
+library("totalcensus")
+library("cowplot")
+library("knitr")
+library("tigris")
+
+# Set your ggplot theme
+mytheme <- theme_bw(base_size = 12) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "bottom", legend.box="vertical",
+        plot.caption = element_text(hjust = 0),
+        plot.title = element_text(hjust = 0),
+        legend.text=element_text(size=10),
+        plot.margin=(unit(c(1,1,1,1), "pt")))
+theme_set(mytheme)
+#Chunk output
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# Load your datasets
+
+SDWIS_Raw<-read.csv("../Data/Raw/SDWIS_Raw.csv")
+
+  #Webscraping
+url <-"https://docs.google.com/spreadsheets/d/e/2PACX-1vSU9gYc6bZ73BJFK1IpxTSSq5IRA0FmUqLWRvVbOw2kVXUzGrZiA5roEDVAjAP510Uk56EmhnypEc5T/pubhtml#"
+webpage <- read_html(url)
+Status <- webpage %>% html_nodes(".s2:nth-child(2) , .s1:nth-child(2)") %>% html_text()
+City <- webpage %>% html_nodes(".s2:nth-child(3) , .s1:nth-child(3)") %>% html_text()
+State <- webpage %>% html_nodes(".s2:nth-child(4) , .s1:nth-child(4)") %>% html_text()
+ServicePop <- webpage %>% html_nodes(".s2:nth-child(5) , .s3, .s1:nth-child(5)") %>% html_text()
+Restoration <- webpage %>% html_nodes(".softmerge:nth-child(6) .softmerge-inner , .s1:nth-child(6), .s2:nth-child(6)") %>% html_text()
+
+
+Moratoria_List<-data.frame(Status, City, State, ServicePop, Restoration)
+```
+
+
+# Rationale and Research Questions
+
+Drinking water systems in the United States rely on residential customers paying their water bills on time in order to fund maintenance, operations, and infrastructure improvements. To make sure that as many customers are paying, most systems will disconnect water to residences or businesses if water bills are overdue by a certain number of days, and charge a fee to have the water turned back on. The practice has many names, but one of the most common is "water shutoffs." Activist groups point out that even in normal circumstances, the practice denies residents their basic human rights, and that utilities often are biased in how they use  shutoffs-- turning off water to residents who cannot afford to pay while not continuing water service to large businesses that are also past-due, but have significant economic influence. Utilities counter that the measure is necessary to ensure that people do pay their bills on time.
+
+The COVID-19 pandemic has introduced significant new challenges to water systems, as the sector tries to support public health and the economy. U.S. federal guidelines suggest that people wash their hands regularly and for twenty seconds each time. If a resident's water is shut off, handwashing is impossible. To make matters worse, the economic shutdown brought by COVID-19 has hit low-income residents particularly hard, and made it more challenging for many to pay their bills. As a result, many states, counties, indigenous areas, cities, towns, and water authorities have temporarily banned shutoffs, placing moratoria on water shutoffs, meaning that no one can have their water  disconnected. Not all authorities have required that homes whose water had been shutoff be reconnected, but some have. It is also worth noting that some states and municipalities, especially in the North, suspend shutoffs in the wintertime, and have extended that suspension in light of the pandemic.
+
+The non-profit Food and Water Watch (FWW) has kept a running list of which authorities have ordered shutoff moratoria, and has used the information there to advocate for a nation-wide water shutoff ban. The list updates automatically every 5 minutes, and in mid-March, FWW published a static map of shutoffs.  Based on the list, the Guardian estimates that 40% of Americans are living in somewhere that has not banned shutoffs. Creating a "live" map could make this information more transparent and allow journalists, residents and advocates see which states and cities have taken the step to ban shutoffs and which have not, and to see where reconnnections have been ordered.
+
+This report will try to answer four questions:
+
+1. How can FWW's list be turned into a "live" map as a tool for journalists and residents?
+2. Is there some spatial relationship between what states and cities are ordering moratoria on water shutoffs? 
+3. Is there a spatial relationship between which cities and states are instituting reconnections?
+4. Is there a connection between service population and whether the orders include reconnections?
+
+\newpage
+
+# Dataset Information
+The dataset for this analysis consisted of three pieces: Food and Water Watch's list, Census TIGER Lines shapefiles to accurately map entities referenced on the list-- including states, municipalities, and water authorities-- and a csv file from the U.S. EPA's Safe Drinking Water Information System (SDWIS), which lists all water districts/authorities. Water districts do not always have the same political boundaries as the towns or counties they serve, and the Census does not create a list of them. SDWIS's list was used to convert terms like "Anytown Water Authority" into a geographical point that would appear in the Census' shapefiles by matching the authority's name to a county served.
+
+The FWW list was obtained by webscraping the page and converting the information there into a dataframe, which can update each time the program is run. This document has information for the type of moratorium (whether the ban was a moratorium, an extension of a pre-existing one, or if the authority does not do shutoffs in the first place), the state, the city/county/authority, the service population covered by the moratorium, whether restorations are included in the order, and a source for the order. All but the source were kept. The list was then separated into three lists-- one of state-level orders, one of orders below the state level, and one of recognized tribes which do not list a state. In order to match Census designations and avoid accidentally matching data to cities with the same name in different states, certain patterns were inserted into the lists, such as turning all cities/counties into "Anytown XY" or "Any County XY", capitalizing all water authority names, and removing "City" from New York City, which is listed in the Census as "New York." SDWIS data was pared down to include only the name of the water system, the state, and the name of one city, county, and ZIP code served.
+
+These lists then needed to be attached to shapefiles in order to visually display which places were instituting moratoria. Since there are several levels of government issuing the bans, several different maps were needed in the same place, and so Census TIGER lines were used. TIGER line files for states, American Indian / Alaska Native / Native Hawaiian Areas, metropolitan divisions, core-based statistical areas, urban areas, and counties were imported using the tigris package. Census-designated places were not used because the file was simply too large, and if the map were published online, it would take too long to load. 
+
+Below is a list of variables created for the map.
+
+Variables                   | Units                                                           |Source
+----------------------------|--------------------------------------------------------------------|-----------
+Moratorium Type             |Text                                                             |FWW
+State                       |Text-State                                                       |FWW
+"City"                      |Text- Any body issuing a moratorium                                 |FWW
+Service Population          |Numeric-Population                                               |FWW
+Counties Served             |Text- Translates from Water District to County                 |SDWIS
+State                       |Polygon-"States"                                               |TIGER Lines
+County                      |Polygon-"Counties"                                             |TIGER Lines
+Native Area                 |Polygon-" American Indian / Alaska Native / Native Hawaiian Areas" |TIGER Lines
+Metropolises (2.5 million+) |Polygon-"Metropolitan Divisions"                                 |TIGER Lines
+Cities                      |Polygon-"Urban Areas"                                            |TIGER Lines
+Towns                       |Polygon-"Core-Based Statistical Areas"                             |TIGER Lines
+
+```{r include=FALSE, warning=FALSE}
+#Wrangling the FWW list
+Moratoria_List <- Moratoria_List %>%
+  filter(State != "" & State != "Partial" & State!="State") 
+Moratoria_List$ServicePop <- str_replace(Moratoria_List$ServicePop,pattern = "([,])", replacement = "")
+Moratoria_List$ServicePop <- str_replace(Moratoria_List$ServicePop,pattern = "([,])", replacement = "")
+Moratoria_List$ServicePop<-as.numeric(Moratoria_List$ServicePop)
+Moratoria_List$City <- str_replace(Moratoria_List$City,pattern = "New York City", replacement = "New York")
+
+#Simplifying the SDWIS list
+SDWIS_Processed<-SDWIS_Raw %>% select(WATER_SYSTEM.PWS_NAME, WATER_SYSTEM.STATE_CODE, WATER_SYSTEM.CITY_NAME, WATER_SYSTEM.ZIP_CODE, WATER_SYSTEM.COUNTIES_SERVED)
+
+#Listing only state-level orders (and DC)
+StatesOnly<-Moratoria_List %>% filter (City == "Statewide (all)"|State=="DC")
+
+#Listing sovereign entities that fall outside of state jurisdictions, such as the Navajo Nation
+states_names<-c("Alabama","Alaska", "Arizona","Arkansas","California","Colorado","Connecticut","Delaware", "District of Columnbia", "Florida", "Georgia", "Hawaii", "Idaho","Illinois","Indiana", "Iowa","Kansas","Kentucky","Louisiana","Maine", "Maryland", "Massachusetts", "Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "Virgin Islands", "Guam", "American Samoa")
+
+SovOnly<-Moratoria_List %>% filter (City != "Statewide (all)" & !(State %in% states_names))
+
+#Listing any order not at the state-level, with state attached
+CitiesOnly<-Moratoria_List %>% filter (City != "Statewide (all)" & State != "DC" & State!="Navajo Nation")
+
+CitiesOnly$StateCode<-state2abbr(CitiesOnly$State)
+CitiesOnly$FullName<- paste(CitiesOnly$City,CitiesOnly$StateCode)
+
+#Subsetting/wrangling counties
+CountiesPrep<-CitiesOnly
+CountiesPrep$City<-gsub("(County).*","\\1",CountiesPrep$City)
+CountiesPrep$FullName<- paste(CountiesPrep$City,CountiesPrep$StateCode)
+
+#Subsetting/wrangling water authorities to match counties
+SDWIS_Processed$FullName<-paste (SDWIS_Processed$WATER_SYSTEM.PWS_NAME, SDWIS_Processed$WATER_SYSTEM.STATE_CODE)
+WaterDist<-CitiesOnly 
+WaterDist$FullName<-toupper(WaterDist$FullName)
+WaterDist<-inner_join(WaterDist, SDWIS_Processed, by="FullName")
+WaterDist$WATER_SYSTEM.ZIP_CODE<-gsub("(.*)-.*","\\1",WaterDist$WATER_SYSTEM.ZIP_CODE)
+WaterDist$CountyFullName<-paste(WaterDist$WATER_SYSTEM.COUNTIES_SERVED, "County",WaterDist$WATER_SYSTEM.STATE_CODE)
+```
+
+
+\newpage
+
+# Exploratory Analysis 
+The shapefiles were then joined with their respective moratoria lists, matching place names where appropriate, and any polygons that were unmatched to a specific entry in the FWW list were dropped, leaving only polygons which show the geographic extent of as many moratoria as possible.
+
+The resulting map shows how much landmass of the country is covered by these moratoria, but does not identify the size of any given population. As different layers were created, their tabular data was saved as an additional dataframe to more easily check for errors.
+
+An initial look shows that several states, cities, counties, tribes, and towns are ordering a stop to water shutoffs, most are not mandating restoration of services, and large states like New York, Florida, Texas have not ordered state-wide moratoria.
+\newpage
+```{r include=FALSE, warning=FALSE}
+#States
+States_raw<-states(cb = FALSE, resolution = "500k", year = NULL, class="sf") #%>% 
+
+#Creating a mapping boundary based on the states
+State_bounds<-st_geometry(States_raw)
+class(State_bounds)
+State_bounds<-st_crop(State_bounds, xmin=-125, xmax=-65, ymin = 20, ymax = 50)
+
+#State joins
+State_map<-geo_join(States_raw,StatesOnly, "NAME", "State")
+State_map<-drop_na(State_map)
+States_map_tabular<-st_drop_geometry(State_map)
+
+#Towns
+options(tigris_use_cache = FALSE)
+towns_raw<-core_based_statistical_areas(cb = FALSE, resolution = "500k", year = NULL, class="sf", refresh=TRUE)
+towns_raw$NAME <- str_replace(towns_raw$NAME,pattern = "([,])", replacement = "")
+towns_tabular<-st_drop_geometry(towns_raw)
+towns_map<-geo_join(towns_raw,CitiesOnly, "NAME", "FullName")
+towns_map<-drop_na(towns_map)
+towns_map_tabular<-st_drop_geometry(towns_map)
+
+#Cities
+options(tigris_use_cache = TRUE)
+cities_raw<-urban_areas(cb=TRUE, class="sf", refresh=TRUE)
+cities_tabular<-st_drop_geometry(cities_raw)
+cities_raw$NAME10<-gsub("(.*)--.*","\\1",cities_raw$NAME10)
+cities_raw$NAME10<-gsub("(.*)--.*","\\1",cities_raw$NAME10)
+cities_raw$NAME10 <- str_replace(cities_raw$NAME10,pattern = "([,])", replacement = "")
+cities_tabular<-st_drop_geometry(cities_raw)
+cities_map<-geo_join(cities_raw, CitiesOnly, "NAME10", "FullName")
+cities_map<-drop_na(cities_map)
+cities_map_tabular<-st_drop_geometry(cities_map)
+
+#Very large metro areas
+options(tigris_use_cache = FALSE)
+metro_raw<-metro_divisions(class="sf", refresh=TRUE)
+metro_tabular<-st_drop_geometry(metro_raw)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*)-.*","\\1",metro_raw$NAME)
+metro_raw$NAME<-gsub("(.*),.*","\\1",metro_raw$NAME)
+metro_map<-geo_join(metro_raw,CitiesOnly, "NAME", "City")
+metro_map<-drop_na(metro_map)
+metro_map_tabular<-st_drop_geometry(metro_map)
+
+#Counties
+options(tigris_use_cache = FALSE)
+counties_raw<-counties(class="sf", refresh=TRUE)
+counties_tabular<-st_drop_geometry(counties_raw)
+counties_processed<-counties_raw
+counties_processed$STATEID<-convert_fips_to_names(counties_processed$STATEFP, geo_header = "STATE")
+counties_processed$FullName<- paste(counties_processed$NAMELSAD,counties_processed$STATEID)
+counties_tabular<-st_drop_geometry(counties_processed)
+counties_map<-geo_join(counties_processed, CountiesPrep, "FullName", "FullName")
+counties_map<-counties_map %>% filter(ServicePop!="NA")
+counties_map_tabular<-st_drop_geometry(counties_map)
+
+#Unmatched Water Districts
+waterdistbounds<-counties_processed
+waterdistbounds_tabular<-st_drop_geometry(waterdistbounds)
+waterdist_map<-geo_join(waterdistbounds, WaterDist, "FullName", "CountyFullName")
+waterdist_map<-waterdist_map %>% filter(ServicePop!="NA")
+waterdist_map_tabular<-st_drop_geometry(waterdist_map)
+
+#NativeAreas
+options(tigris_use_cache = TRUE)
+nativeareas_raw<-native_areas(cb=TRUE, class="sf",refresh=TRUE)
+nativeareas_tabular<-st_drop_geometry(nativeareas_raw)
+nativeareas_map<-geo_join(nativeareas_raw, SovOnly, "NAME", "State")
+nativeareas_map<-nativeareas_map %>% filter(ServicePop!="NA")
+nativeareas_map_tabular<-st_drop_geometry(nativeareas_map)
+```
+
+<br>
+
+```{r echo=FALSE, warning=FALSE, fig.height = 10, fig.width = 12, fig.fullwidth = TRUE }
+
+#Printing the map
+CoverageMap<-ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = waterdist_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = counties_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = nativeareas_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = State_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?")+
+  xlab("Longitude") + ylab("Latitude") +
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+
+print(CoverageMap)
+
+```
+
+```{r include=FALSE}
+4+1
+#This is included to address strange captioning issues.
+```
+
+```{r echo=FALSE, warning=FALSE, fig.cap = "States and Cities with Water Shutoff Moratoria Under COVID-19", fig.height = 3, fig.width = 12,fig.fullwidth = TRUE}
+
+AKCoverageMap<-ggplot()+theme(legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = waterdist_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = counties_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = nativeareas_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = State_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?")+
+  xlab("Longitude") + ylab("Latitude") +
+coord_sf(xlim = c(-174, -129),ylim = c(54, 72), expand = FALSE)
+
+HICoverageMap<-ggplot()+
+  theme(legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = waterdist_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = counties_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = nativeareas_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = State_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?")+
+  xlab("Longitude") + ylab("Latitude") +
+coord_sf(xlim = c(-179, -154),ylim = c(18, 29), expand = FALSE)
+
+PRVICoverageMap<-ggplot()+
+  theme(legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = waterdist_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = metro_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = towns_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = cities_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = counties_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = nativeareas_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  geom_sf(data = State_map, aes(fill = Restoration)) +
+    scale_fill_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+  labs (fill = "Service Restorations?")+
+  xlab("Longitude") + ylab("Latitude") +
+coord_sf(xlim = c(-69, -64),ylim = c(17, 19), expand = FALSE)
+
+plot_grid(AKCoverageMap, HICoverageMap, PRVICoverageMap, nrow = 1, align = 'h', axis = 't')
+```
+
+\newpage
+
+# Analysis
+FWW's list can be turned into an automatically updating map, although with some limitations. When looking at both the maps of populations and coverage, we see some spatial patterns, although these were not statistically investigated.
+
+## How can FWW's list be turned into a "live" map as a tool for journalists and residents?
+This service population map can be turned into a web app using Shiny, and can be updated automatically. For an automatically-updating map to continue working and to accurately incorporate all possible municipalities, extra lines of code need to be written using the Census-designated places. Similarly, the map will need to be hosted on a website or server that can download all of the necessary shapefiles, since a broken internet connection can prevent the shapefiles from loaded if run each time.
+
+While the initial coverage map shows the geographic extent of shutoff moratoria, it does little to show how many people are covered by the orders, and using a color aesthetic to show service populations would cause California's large population to drown out most other service populations. As a result, centroids were created for every polygon, so that each authority is represented as a single point, and all points were combined into a single map. Then, the size of the points was set to represent the relative size of the populations covered by the orders. The result can be seen on the next page.
+
+<br>
+
+```{r echo=FALSE, warning=FALSE, fig.height = 10, fig.width = 12, fig.fullwidth = TRUE }
+#Point files
+state_points<-st_centroid(State_map)
+state_pts_tab<-st_drop_geometry(state_points)
+state_points<-state_points %>% select(Status, City, NAME, ServicePop, Restoration)
+state_points<-state_points %>% rename("State"="NAME")
+
+county_points<-st_centroid(counties_map)
+county_pts_tab<-st_drop_geometry(county_points)
+county_points<-county_points %>% select(Status, City, State, ServicePop, Restoration)
+
+metro_points<-st_centroid(metro_map)
+metro_pts_tab<-st_drop_geometry(metro_points)
+metro_points<-metro_points %>% select(Status, NAME, State, ServicePop, Restoration)
+metro_points<-metro_points %>% rename("City"="NAME")
+
+town_points<-st_centroid(towns_map)
+town_pts_tab<-st_drop_geometry(town_points)
+town_points<-town_points %>% select(Status, City, State, ServicePop, Restoration)
+
+cities_points<-st_centroid(cities_map)
+cities_pts_tab<-st_drop_geometry(cities_points)
+cities_points<-cities_points %>% select(Status, City, State, ServicePop, Restoration)
+
+waterdist_points<-st_centroid(waterdist_map)
+waterdist_pts_tab<-st_drop_geometry(waterdist_points)
+waterdist_points<-waterdist_points %>% select(Status, City, State, ServicePop, Restoration)
+
+nativearea_points<-st_centroid(nativeareas_map)
+nativearea_pts_tab<-st_drop_geometry(nativearea_points)
+nativearea_points<-nativearea_points %>% select(Status, City, NAME, ServicePop, Restoration)
+nativearea_points<-nativearea_points %>% rename("State"="NAME")
+
+all_points<-rbind(state_points,county_points,metro_points,town_points,cities_points,waterdist_points,nativearea_points)
+all_points_tabular<-st_drop_geometry(all_points)
+
+ServPopMap<-ggplot()+
+  geom_sf(data = State_bounds) +
+  geom_sf(data = all_points, aes(color = Restoration, size = ServicePop)) +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+    scale_size_continuous(range = c(0.5, 15))+
+  labs (color = "Service Restorations?", size = "Service Population") +
+   xlab("Longitude") + ylab("Latitude")+
+coord_sf(xlim = c(-127, -65),ylim = c(23, 53), expand = FALSE)
+print(ServPopMap)
+```
+
+
+```{r echo=FALSE, warning=FALSE, fig.height = 3, fig.width = 12, fig.fullwidth = TRUE, fig.cap="Population Covered by Water Shutoff Moratoria Under COVID-19"}
+
+AKPopMap<-ggplot()+theme (legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = all_points, aes(color = Restoration, size = ServicePop)) +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+    scale_size_continuous(range = c(0.5, 15))+
+  labs (color = "Service Restorations?", size = "Service Population") +
+   xlab("Longitude") + ylab("Latitude")+
+coord_sf(xlim = c(-174, -129),ylim = c(54, 72), expand = FALSE)
+  
+HIPopMap<-ggplot()+
+  theme (legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = all_points, aes(color = Restoration, size = ServicePop)) +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+    scale_size_continuous(range = c(0.5, 15))+
+  labs (color = "Service Restorations?", size = "Service Population") +
+   xlab("Longitude") + ylab("Latitude")+
+coord_sf(xlim = c(-179, -154),ylim = c(18, 29), expand = FALSE)
+  
+PRVIPopMap<-ggplot()+
+  theme (legend.position = "none")+
+  geom_sf(data = States_raw) +
+  geom_sf(data = all_points, aes(color = Restoration, size = ServicePop)) +
+    scale_color_manual(values = c("#7fcdbb", "#9b41c4", "#1d91c0"))+
+    scale_size_continuous(range = c(0.5, 15))+
+  labs (color = "Service Restorations?", size = "Service Population") +
+   xlab("Longitude") + ylab("Latitude")+
+coord_sf(xlim = c(-69, -64),ylim = c(17, 19), expand = FALSE)
+
+#print(AKPopMap)
+#print(HIPopMap)
+#print(PRVIPopMap)
+
+plot_grid(AKPopMap, HIPopMap, PRVIPopMap, nrow = 1, align = 'h', axis='t')
+```
+
+\newpage
+
+## Is there some spatial relationship between what states and cities are ordering moratoria on water shutoffs?
+The initial coverage map indicates that there is at least a qualitative relationship between location and water shutoffs at the state level, one which appears to influence cities in nearby states as well. Neighboring Midwestern states like Ohio, Indiana, Wisconsin, and Michigan have passed shutoff moratoria, and Ohio, Wisconsin, and Michigan have gone a step furhter and ordered reconnections as well. This may be because these states have a history of suspending shutoffs in the wintertime, and because water justice issues are especially politically sensitive in Michigan. While Illinois has not issued a statewide order as of April 24, 2020, Chicago has, as have several other communities in the region.
+
+The West Coast states also exhibit a bit of a pattern, with California and Washington ordering moratoria, and with large regions in Oregon following suit. In the Mid-Atlantic, New Jersey and Maryland have both instituted moratoria, as have large cities in New York, Pennsylvania, Washington, DC, and Virginia.
+
+In the South, few states have taken the step of announcing moratoria, with the exception of North Carolina and some cities like Birmingham, New Orleans, and Memphis and other water districtslike Central Arkansas Water.
+
+Lastly, there are some outlying clusters throughout the country, like the state of Montana, and municipalities in Texas, Oklahoma, and Florida. 
+
+More investigation could test whether there are trends to the clusters of where moratoria have been issued, like political affiliations of governors or mayors, income, timeliness of other COVID-19 responses, or other demographics. For instance, a cursory glance suggests that states that have ordered moratoria are more likely to have Democratic executives, but not all states with Democrats for governors have ordered moratoria.
+
+## Is there a spatial relationship between which cities and states are instituting reconnections?
+Few locations have ordered reconnections, but as mentioned earlier, it appears that states and cities bordering the Great Lakes have ordered reconnections at a higher rate than other places. One additional note is that some individual cities that have ordered reconnections are obscured in the map if their state has passed a state-wide moratorium.
+
+
+## Is there a connection between service population and whether the orders include reconnections?
+There does not appear to be a pattern of population size affecting reconnections. While the ratio of orders with reconnections to total reconnections is higher for states than other entities, many of the states with the largest populations in our sample, like California, Indiana, New Jersey, and North Carolina,  have not included restorations in their orders. Interestingly, New York City's service population is larger than several states', and that city does not do shutoffs to begin with.
+
+\newpage
+
+# Summary and Conclusions
+The purpose of this data project has been to turn a list of data about a pressing issue into something that is more easily understood and parsed by the public. For instance, residents of Illinois, New York, or Pennsylvania may ask their governors why there is no state-wide suspension of water shutoffs, while nearby states have issued moratoria. Similarly, St. Louis residents may ask why their peer cities up and down the Mississippi have decided to suspend shutoffs, but St. Louis' water authorities have not. Food and Water Watch advocates for a national ban, and having a map that highlights the disparities in coverage and reconnection may help to further the discussion of the issue.
+
+This map has its limitations. As stated earlier, many towns and cities may be left off the map if they are listed as "urban clusters" or "urban areas," and are only found in Census-designated places. Different states appear to classify areas as "urban" differently, and so there are some notable gaps in the trend. In addition, while this map tries to adjust for different terminology between the Food and Water Watch list and official SDWIS names, it cannot capture every discrepancy-- for instance if FWW enters a utility as Alaska's "Rural Utility Collaborative", but SDWIS lists the district as "Rural Utilit*ies* Collaborative" the two will not match, and there is no easy way to make the code adjust. Nonetheless, many water districts are captured in this map, and hopefully the map represents an accurate picture.
+
+As the country prepares to face incredible economic uncertainty, the affordability of water will be a key issue for many households. Having a visual depiction of how and where shutoffs are being addressed is one piece in the puzzle moving forward.
+
+\newpage
+
+# References
+Filson, J. (2020, March 16) "Stopping Water Shutoffs Locally Not Enough: We Need a National Ban and Service Restoration Plan." Food and Water Watch. Retrieved from:https://www.foodandwaterwatch.org/news/stopping-water-shutoffs-locally-not-enough-we-need-national-ban-and-service-restoration-plan 
+
+Lakhani, Nina. (2020, April 6). "Millions in US at risk of 'water shutoffs' amid layoffs triggered by pandemic" The Guardian. Retrieved from: https://www.theguardian.com/environment/2020/apr/06/millions-us-at-risk-losing-running-water-amid-layoffs-triggered-coronavirus-pandemic
+
