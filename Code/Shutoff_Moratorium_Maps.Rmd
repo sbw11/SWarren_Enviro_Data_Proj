@@ -1,30 +1,4 @@
----
-output: 
-  pdf_document:
-    keep_tex: yes
-    fig_caption: yes
-    number_sections: yes
-geometry: margin=2.54cm
-title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
-author: "Name"
-fontsize: 12pt
-mainfont: Times New Roman
 
----
-
-\newpage
-\tableofcontents 
-\newpage
-\listoftables 
-\newpage
-\listoffigures 
-\newpage
-
-### Rationale and Research Questions
-Write 1-2 paragraph(s) detailing the rationale for your study. This should include both the context of the topic as well as a rationale for your choice of dataset (reason for location, variables, etc.). You may choose to include citations if you like (optional).
-
-At the end of your rationale, introduce a numbered list of your questions (or an overarching question and sub-questions). 
 ```{r setup, include=FALSE}
 # Set your working directory
 setwd("C:/Users/simon/OneDrive - Duke University/Enviro_Data_Analytics_2020/SWarren_Enviro_Data_Proj/Code")
@@ -75,75 +49,6 @@ Moratoria_List$City <- str_replace(Moratoria_List$City,pattern = "New York City"
           #file = "../Data/Processed/MoratoriaList_41920.csv")
 
 SDWIS_Processed<-SDWIS_Raw %>% select(WATER_SYSTEM.PWS_NAME, WATER_SYSTEM.STATE_CODE, WATER_SYSTEM.CITY_NAME, WATER_SYSTEM.ZIP_CODE, WATER_SYSTEM.COUNTIES_SERVED)
-```
-
-### Dataset Information
-Provide information on how the dataset for this analysis were collected, the data contained in the dataset, and any important pieces of information that are relevant to your analyses. This section should contain much of same information as the metadata file for the dataset but formatted in a way that is more narrative.
-
-Describe how you wrangled your dataset in a format similar to a methods section of a journal article.
-
-Add a table that summarizes your data structure (variables, units, ranges and/or central tendencies, data source if multiple are used, etc.). This table can be made in markdown text or inserted as a `kable` function in an R chunk. If the latter, do not include the code used to generate your table.
-
-### Exploratory Analysis
-Insert exploratory visualizations of your dataset. This may include, but is not limited to, graphs illustrating the distributions of variables of interest and/or maps of the spatial context of your dataset. Format your R chunks so that graphs are displayed but code is not displayed. Accompany these graphs with text sections that describe the visualizations and provide context for further analyses.
-
-Each figure should be accompanied by a caption, and each figure should be referenced within the text. 
-
-Scope: think about what information someone might want to know about the dataset before analyzing it statistically. How might you visualize this information? 
-
-### Analysis
-Insert visualizations and text describing your main analyses. Format your R chunks so that graphs are displayed but code and other output is not displayed. Instead, describe the results of any statistical tests in the main text (e.g., "Variable x was significantly different among y groups (ANOVA; df = 300, F = 5.55, p < 0.0001)"). Each paragraph, accompanied by one or more visualizations, should describe the major findings and how they relate to the question and hypotheses. Divide this section into subsections, one for each research question.
-
-Each figure should be accompanied by a caption, and each figure should be referenced within the text
-
-### Summary and Conclusions
-Summarize your major findings from your analyses in a few paragraphs. What conclusions do you draw from your findings? Relate your findings back to the original research questions and rationale.
-# Rationale and Research Questions
-
-
-
-\newpage
-
-# Dataset Information
-
-
-
-\newpage
-
-# Exploratory Analysis 
-Total coverage (ie polygons)
-
-\newpage
-
-# Analysis
-
-
-
-## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
-
-## Question 2: 
-
-
-
-
-\newpage
-
-# Summary and Conclusions
-
-
-\newpage
-
-# References
-<add references here if relevant, otherwise delete this section> 
-All maps were spatial representations of Food and Water Watch's list of cities and states ordering water shutoff moratoria. The live list, along with sources of each order, can be found at this site: https://docs.google.com/spreadsheets/d/e/2PACX-1vSU9gYc6bZ73BJFK1IpxTSSq5IRA0FmUqLWRvVbOw2kVXUzGrZiA5roEDVAjAP510Uk56EmhnypEc5T/pubhtml
-
-```
-
-```
-processing/wrangling, data exploration, and data analysis
-### Webscraping
-```{r}
-
 ```
 
 ### States only
@@ -264,7 +169,7 @@ nativeareas_map<-geo_join(nativeareas_raw, SovOnly, "NAME", "State")
 nativeareas_map<-nativeareas_map %>% filter(ServicePop!="NA")
 nativeareas_map_tabular<-st_drop_geometry(nativeareas_map)
 
-#make this an element, then print?
+#Coverage Map
 pdf((file = "../Output/CoverageMap.pdf"), width = 11, height = 8.5)
 ggplot()+
   geom_sf(data = State_bounds) +
@@ -323,8 +228,8 @@ nativearea_points<-nativearea_points %>% rename("State"="NAME")
 all_points<-rbind(state_points,county_points,metro_points,town_points,cities_points,waterdist_points,nativearea_points)
 all_points_tabular<-st_drop_geometry(all_points)
 
-whoshouldbein<-anti_join(Moratoria_List,Cities_covered_by_states)
-whosleft<-anti_join(Moratoria_List,all_points_tabular)
+#whoshouldbein<-anti_join(Moratoria_List,Cities_covered_by_states)
+#whosleft<-anti_join(Moratoria_List,all_points_tabular)
 
 pdf((file = "../Output/CountiesServicePopMap.pdf"), width = 11, height = 8.5)
 ggplot()+
